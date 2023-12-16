@@ -33,20 +33,38 @@ const ListStudentComponent = () => {
 
   return (
     <div className='container'>
+      <br></br>
+      <br></br>
       
 
       <h2 className='text-center'>Student Web Application Final Exam Registration List</h2>
       <button className='btn btn-primary mb-2' onClick={addNewStudent}>Register Your Defense</button>
 
-      <p className='text-center'>
+      <br></br>
+      <br></br>
+
+      <p className='text-left'>
+        Welcome. This is a form for students who wish to register for their Web Application project on the <strong>18th of December, 2023</strong>. 
+        <br></br>
+        Please note the following:
+        <br></br>
+        <br></br>
         <ul>
-          <li>Note: You will Describe your personal project.</li>
-          <li>You will demo your personal project.</li>
-          <li>Answer my questions.</li>
-          <li>Receive feedback.</li>
-          <li><strong>Please register below and reserve a time slot for your project defence.</strong></li>
+          <li>You will <strong>describe your personal project.</strong></li>
+          <li>You will <strong>DEMO</strong> your personal project.</li>
+          <li>You wiill answer some questions.</li>
+          <li>You will receive feedback.</li>
+          
         </ul>
       </p>
+
+
+      <br></br>
+      <br></br>
+
+
+      <strong>Please register below and reserve a time slot for your project defence.</strong>
+
 
       <table className='table table-striped table-bordered'>
         <thead>
