@@ -4,6 +4,7 @@ import FooterComponent from './components/FooterComponent'
 import HeaderComponent from './components/HeaderComponent'
 import ListStudentComponent from './components/ListStudentComponent'
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
+import StudentComponent from './components/StudentComponent'
 
 function App() {
 
@@ -18,6 +19,8 @@ function App() {
           <Route path = '/' element = {<ListStudentComponent />}></Route>
           {/* // http://localhost:3000/students */}
           <Route path='/students' element = {<ListStudentComponent />}></Route>
+
+          <Route path='/add-student' element ={<StudentComponent />}></Route>
 
         </Routes>
         

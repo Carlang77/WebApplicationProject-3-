@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { listStudents } from '../services/StudentService';
+import { useNavigate } from 'react-router-dom';
 
 const ListStudentComponent = () => {
   const [students, setStudents] = useState([]);
+  const navigator = useNavigate();
 
   useEffect(() => {
     listStudents()
@@ -24,18 +26,17 @@ const ListStudentComponent = () => {
   //   }
   // ];
 
+  function addNewStudent(){
+    navigator('/add-student')
+
+  }
+
   return (
     <div className='container'>
-      <div className='text-left'>
-        {/* Add the logo from the web with increased width */}
-        <img
-          src='https://eek.ee/imgs/EEK-eng.svg'  // Replace with the actual URL of your logo
-          alt='Logo'
-          style={{ width: '400px', height: 'auto', marginBottom: '40px' }}  // Adjusted width and added margin
-        />
-      </div>
+      
 
       <h2 className='text-center'>Student Web Application Final Exam Registration List</h2>
+      <button className='btn btn-primary mb-2' onClick={addNewStudent}>Register Your Defense</button>
 
       <p className='text-center'>
         <ul>
