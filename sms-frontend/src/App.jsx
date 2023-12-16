@@ -1,5 +1,6 @@
 import './App.css'
 import HelloWorld from './HelloWorld'
+import ListStudentComponent from './components/ListStudentComponent'
 
 function App() {
 
@@ -7,7 +8,7 @@ function App() {
   return (
     <>
 
-    <HelloWorld />
+    <ListStudentComponent />
       
     </>
   )

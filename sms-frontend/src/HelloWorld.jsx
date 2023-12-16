@@ -1,7 +1,12 @@
-function HelloWorld(){
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-    return <h1>Hello World!</h1>
-
-
+function HelloWorld() {
+  return (
+    
+      <h1 className="text-center">Hello World Changes!</h1>
+    
+  );
 }
-export default HelloWorld
+
+export default HelloWorld;
