@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { listStudents } from '../services/StudentService';
+import { deleteStudent, listStudents } from '../services/StudentService';
 import { useNavigate } from 'react-router-dom';
 
 const ListStudentComponent = () => {
@@ -26,6 +26,22 @@ const ListStudentComponent = () => {
         console.error(error);
       });
   }, []);
+
+  function removeStudent(id) {
+    console.log(id);
+
+    deleteStudent(id)
+      .then((response) => {
+        console.log('Student deleted successfully');
+        // Update the state or provide feedback to the user
+        listStudents().then((response) => {
+          setStudents(response.data);
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
   return (
     <div className='container'>
@@ -58,7 +74,7 @@ const ListStudentComponent = () => {
       <br />
       <br />
 
-      <strong>Please reserve a time slot for your project defence. Click on the register button above.</strong>
+      <strong>Please reserve a time slot for your project defense. Click on the register button above.</strong>
 
       <table className='table table-striped table-bordered'>
         <thead>
@@ -80,6 +96,9 @@ const ListStudentComponent = () => {
               <td>
                 <button className='btn btn-info' onClick={() => updateStudent(student.id)}>
                   Update
+                </button>
+                <button className='btn btn-danger' onClick={() => removeStudent(student.id)} style={{ marginLeft: '10px' }}>
+                  Delete
                 </button>
               </td>
             </tr>

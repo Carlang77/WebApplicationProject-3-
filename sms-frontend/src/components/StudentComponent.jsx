@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { createStudent } from '../services/StudentService';
+import React, { useEffect, useState } from 'react';
+import { createStudent, getStudent, updateStudent } from '../services/StudentService';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const StudentComponent = () => {
@@ -29,16 +29,54 @@ const StudentComponent = () => {
 
   const navigate = useNavigate();
 
-  function saveStudent(e) {
+ useEffect(() =>{
+
+  if(id){
+    getStudent(id).then((response) => {
+      setFirstName(response.data.firstName);
+      setLastName(response.data.lastName);
+      setEmail(response.data.email);
+    }).catch(error =>{console.error(error);
+    
+    })
+  }
+
+
+
+
+ },[id])
+  
+    
+  
+
+  function saveOrUpdateStudent(e) {
     e.preventDefault();
+
     if (validateForm()) {
+
       const student = { firstName, lastName, email };
       console.log(student);
 
-      createStudent(student).then((response) => {
-        console.log(response.data);
-        navigate('/students'); // Fixed typo here
-      });
+
+      if(id){
+        updateStudent(id, student).then((response) =>
+        {console.log(response.data);
+        navigate('/students');
+        }).catch(error => {console.error(error)})
+
+      }
+      else{
+
+        createStudent(student).then((response) => {
+          console.log(response.data);
+          navigate('/students'); // Fixed typo here
+        }).catch(error => {
+          console.error(error)
+        })
+
+      }
+      
+     
     }
   }
 
@@ -130,7 +168,7 @@ const StudentComponent = () => {
                 {errors.email && <div className='invalid-feedback'>{errors.email}</div>}
               </div>
 
-              <button className='btn btn-success' onClick={saveStudent}>
+              <button className='btn btn-success' onClick={saveOrUpdateStudent}>
                 Submit
               </button>
             </form>
