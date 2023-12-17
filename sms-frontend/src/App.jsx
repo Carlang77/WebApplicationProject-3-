@@ -22,6 +22,9 @@ function App() {
 
           <Route path='/add-student' element ={<StudentComponent />}></Route>
 
+          {/* // http://localhost:3000/edit-student/1 */}
+          <Route path='/edit-student/:id' element = {<StudentComponent />}></Route>
+
         </Routes>
         
         <FooterComponent />

@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { createStudent } from '../services/StudentService';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const StudentComponent = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [selectedTime, setSelectedTime] = useState(''); // New state for selected time
 
   function handleFirstName(e) {
     setFirstName(e.target.value);
@@ -20,26 +19,68 @@ const StudentComponent = () => {
     setEmail(e.target.value);
   }
 
-  function handleTimeChange(e) {
-    setSelectedTime(e.target.value);
-  }
+  const{id} = useParams();
 
-  const navigator = useNavigate();
+  const [errors, setErrors] = useState({
+    firstName: '',
+    lastName: '',
+    email: ''
+  });
+
+  const navigate = useNavigate();
 
   function saveStudent(e) {
     e.preventDefault();
+    if (validateForm()) {
+      const student = { firstName, lastName, email };
+      console.log(student);
 
-    const student = { firstName, lastName, email, selectedTime };
-    console.log(student);
-
-    createStudent(student).then((response) => {
-      console.log(response.data);
-      navigator('/students');
-    });
+      createStudent(student).then((response) => {
+        console.log(response.data);
+        navigate('/students'); // Fixed typo here
+      });
+    }
   }
 
-  // Time options for the dropdown
-  const timeOptions = ['12:00 AM', '12:30 PM','1:00 PM', '1:30 PM','2:00 PM', '2:30 PM','3:00 PM', '3:30 PM','4:00 PM','4:30 PM','5:00 PM'];
+  function validateForm() {
+    let valid = true;
+
+    const errorsCopy = { ...errors };
+    if (firstName.trim()) {
+      errorsCopy.firstName = '';
+    } else {
+      errorsCopy.firstName = 'First name is required';
+      valid = false;
+    }
+
+    if (lastName.trim()) {
+      errorsCopy.lastName = '';
+    } else {
+      errorsCopy.lastName = 'Last name is required';
+      valid = false;
+    }
+
+    if (email.trim()) {
+      errorsCopy.email = '';
+    } else {
+      errorsCopy.email = 'Please provide email'; // Fixed typo here
+      valid = false;
+    }
+
+    setErrors(errorsCopy);
+
+    return valid;
+  }
+
+  function pageTitle(){
+    if(id){
+      return  <h2 className='text-center'>Update Your Details</h2>
+    }
+    else{
+     return <h2 className='text-center'>Register Your Details</h2> 
+    }
+
+  }
 
   return (
     <div className='container'>
@@ -47,7 +88,7 @@ const StudentComponent = () => {
       <br />
       <div className='row'>
         <div className='card col-md-6 offset-md-3 offset-md-3'>
-          <h2 className='text-center'>Register Your Details</h2>
+          {pageTitle()}
           <div className='card-body'>
             <form>
               <div className='form-group mb-2'>
@@ -57,9 +98,10 @@ const StudentComponent = () => {
                   placeholder='Enter Student First Name'
                   name='firstName'
                   value={firstName}
-                  className='form-control'
+                  className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
                   onChange={handleFirstName}
                 />
+                {errors.firstName && <div className='invalid-feedback'>{errors.firstName}</div>}
               </div>
 
               <div className='form-group mb-2'>
@@ -69,9 +111,10 @@ const StudentComponent = () => {
                   placeholder='Enter Student Last Name'
                   name='lastName'
                   value={lastName}
-                  className='form-control'
+                  className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
                   onChange={handleLastName}
                 />
+                {errors.lastName && <div className='invalid-feedback'>{errors.lastName}</div>}
               </div>
 
               <div className='form-group mb-2'>
@@ -81,27 +124,10 @@ const StudentComponent = () => {
                   placeholder='Enter Email'
                   name='email'
                   value={email}
-                  className='form-control'
+                  className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                   onChange={handleEmail}
                 />
-              </div>
-
-              <div className='form-group mb-2'>
-                <label className='form-label'>Select Time for Defense</label>
-                <select
-                  className='form-control'
-                  value={selectedTime}
-                  onChange={handleTimeChange}
-                >
-                  <option value='' disabled>
-                    Select a time
-                  </option>
-                  {timeOptions.map((time) => (
-                    <option key={time} value={time}>
-                      {time}
-                    </option>
-                  ))}
-                </select>
+                {errors.email && <div className='invalid-feedback'>{errors.email}</div>}
               </div>
 
               <button className='btn btn-success' onClick={saveStudent}>
