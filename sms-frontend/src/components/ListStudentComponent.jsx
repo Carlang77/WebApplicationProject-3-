@@ -43,17 +43,27 @@ const ListStudentComponent = () => {
       });
   }
 
+  // Function to open the Moodle login page
+  function loginToMoodle() {
+    window.location.href = 'https://moodle.eek.ee/';
+  }
+
   return (
     <div className='container'>
       <br />
       <br />
 
       <h2 className='text-center'>Student Web Application Final Exam Registration List</h2>
-      <button className='btn btn-primary mb-2' onClick={addNewStudent}>
-        Register Your Defense
-      </button>
 
-      <br />
+      <div className='d-flex justify-content-between mb-2'>
+        <button className='btn btn-primary' onClick={addNewStudent}>
+          Register Your Defense
+        </button>
+        <button className='btn btn-primary' onClick={loginToMoodle} >
+          Login to Moodle
+        </button>
+      </div>
+
       <br />
 
       <p className='text-left'>
